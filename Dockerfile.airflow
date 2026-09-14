@@ -1,0 +1,14 @@
+FROM apache/airflow:2.9.3-python3.11
+
+USER root
+# Pasang dependensi C compiler dan curl untuk healthcheck serta kompilasi paket binary
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+USER airflow
+# Pasang seluruh dependensi Python yang telah di-pin versinya
+COPY requirements.txt /requirements.txt
+RUN pip install --no-cache-dir -r /requirements.txt

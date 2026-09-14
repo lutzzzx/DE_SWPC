@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: silver
+    schema: silver
+    tables:
+      - name: planetary_k_index
+        loaded_at_field: loaded_at
+      - name: solar_wind_mag
+        loaded_at_field: loaded_at
+      - name: solar_wind_plasma
+        loaded_at_field: loaded_at
+      - name: goes_xrays
+        loaded_at_field: loaded_at

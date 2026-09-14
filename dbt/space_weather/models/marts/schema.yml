@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: fct_geomagnetic_activity
+    description: "Fakta aktivitas geomagnetik per menit dengan klasifikasi NOAA G-scale."
+    columns:
+      - name: observed_at
+        tests:
+          - not_null
+          - unique
+      - name: kp_value
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 9
+      - name: storm_scale
+        tests:
+          - accepted_values:
+              values: ['G0 - Normal', 'G1 - Minor', 'G2 - Moderate', 'G3 - Strong', 'G4 - Severe', 'G5 - Extreme']
+
+  - name: fct_solar_flare_activity
+    description: "Fakta klasifikasi solar flare berbasis fluks sinar-X GOES (channel 0.1-0.8nm)."
+    columns:
+      - name: observed_at
+        tests:
+          - not_null
+          - unique
+      - name: flare_class
+        tests:
+          - accepted_values:
+              values: ['A', 'B', 'C', 'M', 'X']
+
+  - name: fct_solar_wind_conditions
+    description: "Fakta kondisi angin matahari (kecepatan, densitas, medan magnet)."
+    columns:
+      - name: observed_at
+        tests:
+          - not_null
+          - unique
+      - name: speed
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 3000

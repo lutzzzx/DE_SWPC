@@ -1,0 +1,103 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    name: "Space Weather Alerts"
+    folder: "Space Weather"
+    interval: 1m
+    rules:
+      - uid: "geomagnetic_storm_kp5"
+        title: "Geomagnetic Storm Warning (Kp >= 5)"
+        condition: "C"
+        data:
+          - refId: "A"
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "SpaceWeatherDWH"
+            model:
+              format: "table"
+              rawSql: "SELECT observed_at AS \"time\", kp_value FROM gold.fct_geomagnetic_activity ORDER BY observed_at DESC LIMIT 1;"
+              refId: "A"
+          - refId: "B"
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              type: "reduce"
+              expression: "A"
+              reducer: "last"
+              refId: "B"
+              settings:
+                mode: "dropNN"
+          - refId: "C"
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              type: "threshold"
+              expression: "B"
+              conditions:
+                - evaluator:
+                    params: [5]
+                    type: "gte"
+              refId: "C"
+        noDataState: "OK"
+        execErrState: "Error"
+        for: "2m"
+        annotations:
+          summary: "Aktivitas Badai Geomagnetik Terdeteksi (Kp >= 5)"
+          description: "Nilai Indeks Kp Planetari saat ini mencapai atau melampaui ambang batas badai geomagnetik NOAA level G1 (Minor Storm) ke atas."
+        labels:
+          severity: "warning"
+          category: "space-weather"
+
+      - uid: "solar_flare_class_m"
+        title: "Solar Flare Warning (Flux >= 1e-5 W/m² - M/X Class)"
+        condition: "C"
+        data:
+          - refId: "A"
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "SpaceWeatherDWH"
+            model:
+              format: "table"
+              rawSql: "SELECT observed_at AS \"time\", flux FROM gold.fct_solar_flare_activity ORDER BY observed_at DESC LIMIT 1;"
+              refId: "A"
+          - refId: "B"
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              type: "reduce"
+              expression: "A"
+              reducer: "last"
+              refId: "B"
+              settings:
+                mode: "dropNN"
+          - refId: "C"
+            relativeTimeRange:
+              from: 86400
+              to: 0
+            datasourceUid: "__expr__"
+            model:
+              type: "threshold"
+              expression: "B"
+              conditions:
+                - evaluator:
+                    params: [0.00001]
+                    type: "gte"
+              refId: "C"
+        noDataState: "OK"
+        execErrState: "Error"
+        for: "2m"
+        annotations:
+          summary: "Letupan Flare Matahari Signifikan Terdeteksi (Kelas M/X)"
+          description: "Fluks sinar-X GOES mencapai fluks >= 1.0e-5 W/m² yang berpotensi memicu pemadaman radio frekuensi tinggi (Radio Blackout Skala R1-R5)."
+        labels:
+          severity: "critical"
+          category: "space-weather"

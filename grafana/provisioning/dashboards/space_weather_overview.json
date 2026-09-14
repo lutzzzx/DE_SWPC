@@ -1,0 +1,608 @@
+{
+    "annotations": {
+        "list": []
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "id": null,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+        {
+            "id": 1,
+            "title": "Indeks Kp Terkini (Aktivitas Geomagnetik)",
+            "type": "stat",
+            "gridPos": {
+                "h": 4,
+                "w": 8,
+                "x": 0,
+                "y": 0
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", kp_value AS \"Kp Index\" FROM gold.fct_geomagnetic_activity ORDER BY observed_at DESC LIMIT 1;",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 4
+                            },
+                            {
+                                "color": "#EF843C",
+                                "value": 5
+                            },
+                            {
+                                "color": "#E24D42",
+                                "value": 7
+                            },
+                            {
+                                "color": "#8F3BB8",
+                                "value": 8
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            }
+        },
+        {
+            "id": 2,
+            "title": "Kecepatan Angin Matahari Terkini",
+            "type": "stat",
+            "gridPos": {
+                "h": 4,
+                "w": 8,
+                "x": 8,
+                "y": 0
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", speed AS \"Kecepatan Angin\" FROM gold.fct_solar_wind_conditions ORDER BY observed_at DESC LIMIT 1;",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EF843C",
+                                "value": 500
+                            },
+                            {
+                                "color": "#E24D42",
+                                "value": 700
+                            }
+                        ]
+                    },
+                    "unit": "velocitykms"
+                },
+                "overrides": []
+            },
+            "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            }
+        },
+        {
+            "id": 3,
+            "title": "Fluks Sinar-X GOES Terkini",
+            "type": "stat",
+            "gridPos": {
+                "h": 4,
+                "w": 8,
+                "x": 16,
+                "y": 0
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", flux AS \"Fluks Sinar-X\" FROM gold.fct_solar_flare_activity ORDER BY observed_at DESC LIMIT 1;",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.000001
+                            },
+                            {
+                                "color": "#EF843C",
+                                "value": 0.00001
+                            },
+                            {
+                                "color": "#E24D42",
+                                "value": 0.0001
+                            }
+                        ]
+                    },
+                    "unit": "wattm2"
+                },
+                "overrides": []
+            },
+            "options": {
+                "colorMode": "background",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "textMode": "auto"
+            }
+        },
+        {
+            "id": 4,
+            "title": "Tren Indeks Kp Planetari & Skala Badai Geomagnetik",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 4
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", kp_value AS \"Planetary Kp Index\" FROM gold.fct_geomagnetic_activity WHERE $__timeFilter(observed_at) ORDER BY observed_at ASC;",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "drawStyle": "line",
+                        "lineInterpolation": "smooth",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "thresholdsStyle": {
+                            "mode": "line"
+                        }
+                    },
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "mappings": [],
+                    "max": 9,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 4
+                            },
+                            {
+                                "color": "#EF843C",
+                                "value": 5
+                            },
+                            {
+                                "color": "#E24D42",
+                                "value": 7
+                            },
+                            {
+                                "color": "#8F3BB8",
+                                "value": 8
+                            }
+                        ]
+                    }
+                },
+                "overrides": []
+            },
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull",
+                        "max",
+                        "mean"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            }
+        },
+        {
+            "id": 5,
+            "title": "Fluks Sinar-X GOES & Klasifikasi Flare Matahari",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 4
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", flux AS \"GOES X-Ray Flux (0.1-0.8 nm)\" FROM gold.fct_solar_flare_activity WHERE $__timeFilter(observed_at) ORDER BY observed_at ASC;",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "drawStyle": "line",
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "log": 10,
+                            "type": "log"
+                        },
+                        "showPoints": "never",
+                        "spanNulls": false,
+                        "thresholdsStyle": {
+                            "mode": "line"
+                        }
+                    },
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 0.000001
+                            },
+                            {
+                                "color": "#EF843C",
+                                "value": 0.00001
+                            },
+                            {
+                                "color": "#E24D42",
+                                "value": 0.0001
+                            }
+                        ]
+                    },
+                    "unit": "wattm2"
+                },
+                "overrides": []
+            },
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull",
+                        "max"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            }
+        },
+        {
+            "id": 6,
+            "title": "Dinamika Angin Matahari: Kecepatan (km/s) & Medan Magnet Bz (nT)",
+            "type": "timeseries",
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 0,
+                "y": 12
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", speed AS \"Kecepatan Angin (km/s)\" FROM gold.fct_solar_wind_conditions WHERE $__timeFilter(observed_at) ORDER BY observed_at ASC;",
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT observed_at AS \"time\", bz_gsm AS \"IMF Bz (nT)\" FROM gold.fct_solar_wind_conditions WHERE $__timeFilter(observed_at) ORDER BY observed_at ASC;",
+                    "refId": "B"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "custom": {
+                        "axisPlacement": "auto",
+                        "drawStyle": "line",
+                        "lineInterpolation": "linear",
+                        "lineWidth": 2,
+                        "pointSize": 5,
+                        "showPoints": "never",
+                        "spanNulls": false
+                    },
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "mappings": []
+                },
+                "overrides": [
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "Kecepatan Angin (km/s)"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "velocitykms"
+                            },
+                            {
+                                "id": "custom.axisPlacement",
+                                "value": "left"
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "light-blue",
+                                    "mode": "fixed"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "matcher": {
+                            "id": "byName",
+                            "options": "IMF Bz (nT)"
+                        },
+                        "properties": [
+                            {
+                                "id": "unit",
+                                "value": "none"
+                            },
+                            {
+                                "id": "custom.axisPlacement",
+                                "value": "right"
+                            },
+                            {
+                                "id": "color",
+                                "value": {
+                                    "fixedColor": "red",
+                                    "mode": "fixed"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "options": {
+                "legend": {
+                    "calcs": [
+                        "lastNotNull",
+                        "max",
+                        "mean"
+                    ],
+                    "displayMode": "table",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            }
+        },
+        {
+            "id": 7,
+            "title": "Distribusi Level Badai Geomagnetik (G-Scale)",
+            "type": "piechart",
+            "gridPos": {
+                "h": 8,
+                "w": 12,
+                "x": 12,
+                "y": 12
+            },
+            "datasource": {
+                "type": "postgres",
+                "uid": "SpaceWeatherDWH"
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "postgres",
+                        "uid": "SpaceWeatherDWH"
+                    },
+                    "format": "table",
+                    "rawSql": "SELECT storm_scale AS \"metric\", COUNT(*) AS \"value\" FROM gold.fct_geomagnetic_activity WHERE $__timeFilter(observed_at) GROUP BY storm_scale ORDER BY \"value\" DESC;",
+                    "refId": "A"
+                }
+            ],
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "mappings": []
+                },
+                "overrides": []
+            },
+            "options": {
+                "displayLabels": [
+                    "percent",
+                    "name"
+                ],
+                "legend": {
+                    "displayMode": "table",
+                    "placement": "right",
+                    "showLegend": true,
+                    "values": [
+                        "value",
+                        "percent"
+                    ]
+                },
+                "pieType": "donut",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            }
+        }
+    ],
+    "refresh": "1m",
+    "schemaVersion": 39,
+    "tags": [
+        "space-weather",
+        "noaa",
+        "production"
+    ],
+    "templating": {
+        "list": []
+    },
+    "time": {
+        "from": "now-7d",
+        "to": "now"
+    },
+    "timepicker": {
+        "refresh_intervals": [
+            "30s",
+            "1m",
+            "5m",
+            "15m",
+            "30m",
+            "1h"
+        ]
+    },
+    "timezone": "utc",
+    "title": "Space Weather Intelligence — Overview",
+    "uid": "space_weather_overview",
+    "version": 1,
+    "weekStart": ""
+}

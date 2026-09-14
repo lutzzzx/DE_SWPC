@@ -1,0 +1,64 @@
+# Environment variables & credentials
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+ENV*/
+
+# Apache Airflow
+airflow/logs/
+*.airflow.log
+airflow/airflow.cfg
+airflow/airflow.db
+
+# dbt (Data Build Tool)
+**/target/
+**/dbt_packages/
+**/logs/
+**/.user.yml
+
+# IDEs and Editors
+.idea/
+*.swp
+*.swo
+*~
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs & Temporary Data
+*.log
+scratch/
+panduan.md
